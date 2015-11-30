@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   validates :title, :description, :image_url, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0.01 }
-  validates :title, uniqueness: true
+  validates :title, uniqueness: true, length: { minimum: 3 }
 
   #why do we set allow_blank to true on the image_url attribute
   #when we validate its presence above???

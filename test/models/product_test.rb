@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase
+	fixtures :products
 
 	test "product attributes must not be empty" do
  	    product = Product.new
@@ -35,6 +36,7 @@ class ProductTest < ActiveSupport::TestCase
  					price: 1,
  					image_url: image_url)
  	end
+
  	test "image url" do
  		#edited variable names below to make them more descriptive than they are in the book 
  		#('ok' and 'bad') => ('good_image_urls' and 'bad_image_urls') 
@@ -46,5 +48,23 @@ class ProductTest < ActiveSupport::TestCase
  		bad_image_urls.each do |name|
  			assert new_product(name).invalid?, "#{name} shouldn't be valid"
  		end
+ 	end
+
+ 	test "product is not valid without a unique title" do
+ 		product = Product.new(title: products(:ruby).title,
+ 							  description: "yyy",
+ 							  price: 1,
+ 							  image_url: "fred.gif")
+ 		assert product.invalid?
+ 		assert_equal [I18n.translate('errors.messages.taken')], product.errors[:title]
+ 	end
+
+ 	test "title is not valid if less than three characters in length" do
+ 		product = Product.new(title: "Ab",
+ 							  description: "yyy",
+ 							  price: 1,
+ 							  image_url: "fred.gif")
+ 		assert product.invalid?
+ 		assert_equal ["is too short (minimum is 3 characters)"], product.errors[:title]
  	end
 end
