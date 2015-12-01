@@ -9,5 +9,5 @@
 Product.delete_all
 Product.create!(title: "Programming Ruby 1.9 & 2.0",
         description: %{<p>Ruby is amazing etc</p>},
-        image_url: "ruby.png",
+        image_url: "ruby.jpg",
         price: 49.95)
