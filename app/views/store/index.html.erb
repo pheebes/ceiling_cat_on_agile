@@ -3,7 +3,9 @@
 <% end %>
 
 <h1> Your Pragmatic Catalog </h1>
-
+<% if @view_count > 5%>
+	<p>The number of times you have visited this page in your current session is: <%= @view_count %></p>
+<% end %>
 <% cache ['store', Product.latest] do %>
 	<% @products.each do |product| %>
 		<% cache ['entry', product] do %>
